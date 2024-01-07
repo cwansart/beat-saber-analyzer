@@ -6,6 +6,8 @@
 #include <cctype>
 #include <iomanip>
 
+constexpr auto NL = "\n";
+
 // program errors
 enum ERRNO
 {
@@ -87,7 +89,7 @@ int main(int argc, char** argv)
         std::stringstream ss(line);
         std::string token;
         unsigned int token_num = 0;
-        score_t score;
+        score_t score{ 0 };
         match_t match;
         while (std::getline(ss, token, ','))
         {
@@ -144,21 +146,22 @@ int main(int argc, char** argv)
     score_f.close();
 
     // print data
-    std::cout << "   %   | blocks | count | PosX | PosY | PosZ | RotX | RotY | RotZ" << std::endl
-              << "---------------------------------------------------------" << std::endl;
+    std::cout << "   %   | blocks | count | PosX | PosY | PosZ | RotX | RotY | RotZ" << NL
+              << "---------------------------------------------------------" << NL;
     for (auto& match : matches)
     {
         score_t highscore = find_highscore(match.scores);
         std::cout << " " << std::fixed << std::setprecision(2) << highscore.percentage << " | "
-            << std::setfill(' ') << std::setw(6) << highscore.blocks << " | "
-            << std::setfill(' ') << std::setw(5) << match.scores.size() << " | "
-            << std::setfill(' ') << std::setw(4) << match.pos_x << " | "
-            << std::setfill(' ') << std::setw(4) << match.pos_y << " | "
-            << std::setfill(' ') << std::setw(4) << match.pos_z << " | "
-            << std::setfill(' ') << std::setw(4) << match.rot_x << " | "
-            << std::setfill(' ') << std::setw(4) << match.rot_y << " | "
-            << std::setfill(' ') << std::setw(4) << match.rot_z
-            << std::endl;
+                  << std::setfill(' ') << std::setw(6) << highscore.blocks << " | "
+                  << std::setfill(' ') << std::setw(5) << match.scores.size() << " | "
+                  << std::setfill(' ') << std::setw(4) << match.pos_x << " | "
+                  << std::setfill(' ') << std::setw(4) << match.pos_y << " | "
+                  << std::setfill(' ') << std::setw(4) << match.pos_z << " | "
+                  << std::setfill(' ') << std::setw(4) << match.rot_x << " | "
+                  << std::setfill(' ') << std::setw(4) << match.rot_y << " | "
+                  << std::setfill(' ') << std::setw(4) << match.rot_z
+                  << NL;
     }
+    std::cout << std::endl;
     return 0;
 }
